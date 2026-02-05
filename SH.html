@@ -1,0 +1,1482 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="JFH-JPS - Jeunes et Futurs Hydrogéologues. L'eau notre science, le savoir notre force.">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline'; img-src 'self' data:;">
+    <title>JFH-JPS | L'eau notre science, le savoir notre force</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --sky-blue: #87CEEB;
+            --light-sky: #B0E0E6;
+            --deep-sky: #00BFFF;
+            --pale-sky: #E0F4FF;
+            --white: #FFFFFF;
+            --dark-text: #2C3E50;
+            --light-text: #5A6C7D;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            color: var(--dark-text);
+            overflow-x: hidden;
+        }
+
+        /* Page Container */
+        .page {
+            display: none;
+            animation: pageIn 0.5s ease-out;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes pageIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Navigation */
+        header {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(135, 206, 235, 0.15);
+            border-bottom: 2px solid var(--sky-blue);
+            transition: transform 0.3s;
+        }
+
+        header.hidden {
+            transform: translateY(-100%);
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            cursor: pointer;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--sky-blue), var(--deep-sky));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+
+        .logo-subtitle {
+            font-size: 0.7rem;
+            color: var(--light-text);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            color: var(--deep-sky);
+            cursor: pointer;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        nav a {
+            color: var(--dark-text);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            position: relative;
+            padding: 0.5rem 0;
+            cursor: pointer;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--deep-sky);
+            transition: width 0.3s;
+            border-radius: 2px;
+        }
+
+        nav a:hover::after,
+        nav a.active::after {
+            width: 100%;
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 80px;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            z-index: 999;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .mobile-menu.active {
+            max-height: 500px;
+        }
+
+        .mobile-menu ul {
+            list-style: none;
+            padding: 1rem 0;
+        }
+
+        .mobile-menu a {
+            display: block;
+            padding: 1rem 2rem;
+            color: var(--dark-text);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .mobile-menu a:hover {
+            background: var(--pale-sky);
+            color: var(--deep-sky);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--sky-blue) 0%, var(--deep-sky) 100%);
+            position: relative;
+            color: white;
+            padding: 180px 2rem 120px;
+            text-align: center;
+            margin-top: 80px;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.15) 0%, transparent 50%);
+            animation: float 20s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-30px) scale(1.05); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 900;
+            line-height: 1.2;
+            animation: fadeInUp 1s;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .hero-tagline {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            animation: fadeInUp 1s 0.2s backwards;
+            opacity: 0.95;
+        }
+
+        .hero-slogan {
+            font-size: 2rem;
+            margin-bottom: 3rem;
+            font-weight: 700;
+            font-style: italic;
+            animation: fadeInUp 1s 0.4s backwards;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s 0.6s backwards;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1.3rem 2.8rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            border: none;
+        }
+
+        .cta-primary {
+            background: white;
+            color: var(--deep-sky);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .cta-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .cta-secondary {
+            background: transparent;
+            color: white;
+            border: 3px solid white;
+        }
+
+        .cta-secondary:hover {
+            background: white;
+            color: var(--deep-sky);
+            transform: translateY(-5px);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .wave {
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path fill="%23ffffff" d="M0,50 Q300,0 600,50 T1200,50 L1200,120 L0,120 Z"/></svg>');
+            background-size: cover;
+        }
+
+        /* Sections */
+        section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 6rem 3rem;
+        }
+
+        h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--deep-sky);
+            text-align: center;
+            font-weight: 900;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            width: 120px;
+            height: 5px;
+            background: linear-gradient(90deg, var(--sky-blue), var(--deep-sky));
+            margin: 1.5rem auto;
+            border-radius: 3px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--light-text);
+            font-size: 1.2rem;
+            margin-bottom: 4rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Cards */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 25px;
+            box-shadow: 0 10px 40px rgba(135, 206, 235, 0.2);
+            border: 2px solid var(--pale-sky);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--sky-blue), var(--deep-sky));
+        }
+
+        .card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 25px 60px rgba(135, 206, 235, 0.4);
+        }
+
+        .card-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            transition: transform 0.3s;
+        }
+
+        .card:hover .card-icon {
+            transform: scale(1.2) rotate(5deg);
+        }
+
+        .card h3 {
+            color: var(--deep-sky);
+            margin-bottom: 1rem;
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--sky-blue), var(--deep-sky));
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(135, 206, 235, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--deep-sky);
+            color: var(--deep-sky);
+        }
+
+        .btn-outline:hover {
+            background: var(--deep-sky);
+            color: white;
+        }
+
+        /* Project Detail Page */
+        .project-header {
+            background: linear-gradient(135deg, var(--pale-sky) 0%, white 100%);
+            padding: 120px 3rem 4rem;
+            margin-top: 80px;
+        }
+
+        .project-header h1 {
+            font-size: 3rem;
+            color: var(--deep-sky);
+            margin-bottom: 1rem;
+        }
+
+        .project-meta {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            color: var(--light-text);
+        }
+
+        .project-content {
+            padding: 4rem 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .project-image {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, var(--sky-blue), var(--deep-sky));
+            border-radius: 20px;
+            margin: 2rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+        }
+
+        /* Form Styles */
+        form {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            padding: 3rem;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(135, 206, 235, 0.2);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.8rem;
+            color: var(--deep-sky);
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            border: 2px solid var(--light-sky);
+            border-radius: 15px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background: white;
+            font-family: inherit;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--deep-sky);
+            box-shadow: 0 0 0 4px rgba(135, 206, 235, 0.2);
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 1.3rem;
+            background: linear-gradient(135deg, var(--sky-blue), var(--deep-sky));
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        button[type="submit"]:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(135, 206, 235, 0.6);
+        }
+
+        /* Back Button */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            color: var(--deep-sky);
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s;
+        }
+
+        .back-btn:hover {
+            transform: translateX(-5px);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: white;
+            padding: 4rem 2rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: var(--sky-blue);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        .footer-links a:hover {
+            color: var(--sky-blue);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Scroll Animations */
+        .scroll-fade {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s;
+        }
+
+        .scroll-fade.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            border: 4px solid var(--pale-sky);
+            border-top: 4px solid var(--deep-sky);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 2rem auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            section {
+                padding: 5rem 2rem;
+            }
+        }
+
+        @media (max-width: 968px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            nav > ul {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+
+            .hero-slogan {
+                font-size: 1.5rem;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .cta-button {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .logo {
+                font-size: 1.3rem;
+            }
+
+            .logo-subtitle {
+                font-size: 0.6rem;
+            }
+
+            .hero {
+                padding: 140px 1rem 80px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            section {
+                padding: 3rem 1rem;
+            }
+
+            form {
+                padding: 2rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <nav>
+            <div class="logo-container" onclick="navigateTo('home')">
+                <div class="logo">SERVICE HYDRO-BENIN</div>
+                <div class="logo-subtitle">Jeunes et Futurs Hydrogéologues - Jeunes Puits du Savoir</div>
+            </div>
+            <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+            <ul>
+                <li><a onclick="navigateTo('home')" class="active">Accueil</a></li>
+                <li><a onclick="navigateTo('about')">À Propos</a></li>
+                <li><a onclick="navigateTo('projects')">Projets</a></li>
+                <li><a onclick="navigateTo('team')">Équipe</a></li>
+                <li><a onclick="navigateTo('gallery')">Galerie</a></li>
+                <li><a onclick="navigateTo('blog')">Blog</a></li>
+                <li><a onclick="navigateTo('contact')">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="mobile-menu" id="mobileMenu">
+            <ul>
+                <li><a onclick="navigateTo('home'); toggleMenu();">Accueil</a></li>
+                <li><a onclick="navigateTo('about'); toggleMenu();">À Propos</a></li>
+                <li><a onclick="navigateTo('projects'); toggleMenu();">Projets</a></li>
+                <li><a onclick="navigateTo('team'); toggleMenu();">Équipe</a></li>
+                <li><a onclick="navigateTo('gallery'); toggleMenu();">Galerie</a></li>
+                <li><a onclick="navigateTo('blog'); toggleMenu();">Blog</a></li>
+                <li><a onclick="navigateTo('contact'); toggleMenu();">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- HOME PAGE -->
+    <div id="home-page" class="page active">
+        <section class="hero">
+            <div class="hero-content">
+                <h1>JFH-JPS</h1>
+                <p class="hero-tagline">Jeunes et Futurs Hydrogéologues • Jeunes Puits du Savoir</p>
+                <p class="hero-slogan">L'eau notre science , le savoir notre force </p>
+                <div class="cta-buttons">
+                    <button class="cta-button cta-primary" onclick="navigateTo('contact')">Rejoignez-nous</button>
+                    <button class="cta-button cta-secondary" onclick="navigateTo('about')">Découvrir</button>
+                </div>
+            </div>
+            <div class="wave"></div>
+        </section>
+
+        <section style="background: linear-gradient(135deg, #f8fbff 0%, #e3f2fd 100%);">
+            <h2>Nos Domaines d'Excellence</h2>
+            <p class="section-subtitle">Des solutions innovantes pour les défis hydrogéologiques de demain</p>
+            <div class="cards">
+                <div class="card scroll-fade" onclick="navigateTo('project-hydrogeo')">
+                    <div class="card-icon"></div>
+                    <h3>Hydrogéologie</h3>
+                    <p>Études approfondies des nappes phréatiques, modélisation des aquifères et gestion durable des ressources en eau souterraine.
+                 </p>
+                </div>
+                <div class="card scroll-fade" onclick="navigateTo('project-qualite')">
+                    <div class="card-icon">🔬</div>
+                    <h3>Qualité de l'Eau</h3>
+                    <p>Analyses physico-chimiques et bactériologiques pour garantir la qualité des ressources hydriques et protéger la santé publique.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Pourquoi Nous Rejoindre ?</h2>
+            <div class="cards">
+                <div class="card scroll-fade">
+                    <div class="card-icon">🎯</div>
+                    <h3>Impact Réel</h3>
+                    <p>Participez à des projets concrets qui font une différence mesurable dans la gestion de l'eau.</p>
+                </div>
+                <div class="card scroll-fade">
+                    <div class="card-icon">🤝</div>
+                    <h3>Réseau Professionnel</h3>
+                    <p>Développez votre réseau avec des experts, des institutions et des partenaires clés du secteur.</p>
+                </div>
+                <div class="card scroll-fade">
+                    <div class="card-icon">📚</div>
+                    <h3>Apprentissage Continu</h3>
+                    <p>Accédez à des formations de pointe et développez vos compétences en hydrogéologie.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ABOUT PAGE -->
+    <div id="about-page" class="page">
+        <div class="project-header">
+            <div style="max-width: 1200px; margin: 0 auto;">
+                <a onclick="navigateTo('home')" class="back-btn">← Retour</a>
+                <h1>À Propos de JFH-JPS</h1>
+                <p style="font-size: 1.3rem; color: var(--light-text); margin-top: 1rem;">
+                    Une association étudiante qui révolutionne l'hydrogéologie
+                </p>
+            </div>
+        </div>
+
+        <div class="project-content">
+            <h2>Notre Histoire</h2>
+            <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 2rem;">
+                Fondé en 2025 par des étudiants passionnés de l'Institut National de l'Eau, Le Service HydroBenin est né d'une conviction profonde : la jeunesse a le pouvoir et le devoir de transformer les défis hydrogéologiques en opportunités durables.
+            </p>
+            <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 2rem;">
+                Notre devise "L'eau notre science, le savoir notre force" résume notre engagement à allier excellence scientifique et transmission des connaissances pour un avenir où l'eau est gérée de manière durable et équitable.
+            </p>
+
+            <div class="project-image">
+                📸 Équipe JFH-JPS en Action
+            </div>
+
+            <h2>Nos Valeurs</h2>
+            <div class="cards">
+                <div class="card">
+                    <div class="card-icon">🔬</div>
+                    <h3>Excellence Scientifique</h3>
+                    <p>Rigueur, précision et innovation dans toutes nos recherches et actions.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🌍</div>
+                    <h3>Durabilité</h3>
+                    <p>Engagement pour la préservation des ressources en eau pour les générations futures.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🤝</div>
+                    <h3>Collaboration</h3>
+                    <p>Travail d'équipe, partage des connaissances et construction de partenariats solides.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">💡</div>
+                    <h3>Innovation</h3>
+                    <p>Créativité et audace pour développer des solutions novatrices aux défis de l'eau.</p>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 3rem;">
+                <button class="btn" onclick="navigateTo('contact')">Rejoignez Notre Mission</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROJECTS PAGE -->
+    <div id="projects-page" class="page">
+        <div class="project-header">
+            <div style="max-width: 1200px; margin: 0 auto;">
+                <a onclick="navigateTo('home')" class="back-btn">← Retour</a>
+                <h1>Nos Projets</h1>
+                <p style="font-size: 1.3rem; color: var(--light-text); margin-top: 1rem;">
+                    Des initiatives concrètes pour un impact mesurable
+                </p>
+            </div>
+        </div>
+
+        <div class="project-content">
+            <div class="cards">
+                <div class="card scroll-fade" onclick="navigateTo('project-hydrogeo')">
+                    <div class="card-icon">💧</div>
+                    <h3>Modélisation des Aquifères</h3>
+                    <p>Cartographie de Zone</p>
+                    <p style="margin-top: 1rem;"><strong>Statut:</strong>Bientot</p>
+                </div>
+                <div class="card scroll-fade" onclick="navigateTo('project-qualite')">
+                    <div class="card-icon">🔬</div>
+                    <h3>Analyse Qualité Eau</h3>
+                    <p>Programme de surveillance de la qualité des eaux souterraines dans la région.</p>
+                    <p style="margin-top: 1rem;"><strong>Statut:</strong>Bientot</p>
+                </div>
+               
+                
+        </div>
+    </div>
+
+    <!-- PROJECT DETAIL PAGES -->
+    <div id="project-hydrogeo-page" class="page">
+        <div class="project-header">
+            <div style="max-width: 1200px; margin: 0 auto;">
+                <a onclick="navigateTo('projects')" class="back-btn">← Retour aux projets</a>
+                <h1>Modélisation des Aquifères</h1>
+                <div class="project-meta">
+                    <span class="meta-item">📅 Durée:  mois</span>
+                    <span class="meta-item">👥 Équipe:  membres</span>
+                    <span class="meta-item">📍 Localisation: Région Centre</span>
+                </div>
+            </div>
+        </div>
+        <div class="project-content">
+            <h2>Description du Projet</h2>
+            <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 2rem;">
+                Ce projet vise à créer une cartographie 3D détaillée et une modélisation numérique des principaux aquifères de la région. L'objectif est d'optimiser la gestion des ressources en eau souterraine et de prévoir leur évolution face aux changements climatiques.
+            </p>
+
+            <div class="project-image">💧 Cartographie des Aquifères</div>
+
+            <h2>Objectifs Clés</h2>
+            <div class="cards">
+                <div class="card">
+                    <h3>Phase 1: Collecte de Données</h3>
+                    <p>Acquisition de données géologiques, hydrogéologiques et géophysiques sur le terrain.</p>
+                </div>
+                <div class="card">
+                    <h3>Phase 2: Modélisation</h3>
+                    <p>Construction de modèles numériques 3D des aquifères avec logiciels spécialisés.</p>
+                </div>
+                <div class="card">
+                    <h3>Phase 3: Validation</h3>
+                    <p>Tests de validation et calibration des modèles avec données réelles.</p>
+                </div>
+            </div>
+
+            <h2>Impact Attendu</h2>
+            <p style="font-size: 1.1rem; line-height: 1.8;">
+                Ce projet permettra aux gestionnaires de l'eau de prendre des décisions éclairées basées sur des données scientifiques robustes. Il contribuera à une gestion durable des nappes phréatiques et à la prévention de leur surexploitation.
+            </p>
+
+            <div style="text-align: center; margin-top: 3rem;">
+                <button class="btn" onclick="navigateTo('contact')">Participer à ce Projet</button>
+            </div>
+        </div>
+    
+        <div class="project-content">
+            <h2>Objectif</h2>
+            <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 2rem;">
+                Création d'un atlas hydrogéologique interactif accessible en ligne, intégrant toutes les données disponibles sur les ressources en eau souterraine. Cet outil permettra aux chercheurs, gestionnaires et décideurs d'accéder facilement à l'information hydrogéologique.
+            </p>
+            <div class="project-image">🗺️ Cartographie Interactive</div>
+        </div>
+        </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TEAM PAGE -->
+    <div id="team-page" class="page">
+        <div class="project-header">
+            <div style="max-width: 1200px; margin: 0 auto;">
+                <a onclick="navigateTo('home')" class="back-btn">← Retour</a>
+                <h1>Notre Équipe Passionnée</h1>
+                <p style="font-size: 1.3rem; color: var(--light-text); margin-top: 1rem;">
+                    Des talents unis par une même vision
+                </p>
+            </div>
+        </div>
+
+        <div class="project-content">
+            <h2>Présidente </h2>
+            <div class="cards">
+                <div class="card scroll-fade">
+                    <div style="text-align: center; margin-bottom: 1rem;">
+                
+                    
+     <div style="background-image: url('1.jpg');background-size: cover;width:220px;height: 230px;border-radius: 50%; border: 4px solid #38bdf8;box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);transition: transform 1s ease-in-out;transform: rotateY(360deg);">                    </div>
+                    </div>
+           <div style="text-align: center;">
+             <h3>  Mdme Mauzidatou RADJI</h3>
+                    <p style="text-align: center; font-weight: 700; color: var(--deep-sky);">Présidente</p>
+                    <p style="text-align: center; color: var(--light-text); font-size: 0.9rem;"> Etudiante en Hydrogéologie à l'Institut Nationnal de l'eau  </p>
+                  </div>
+                </div>
+                <div class="card scroll-fade">
+                    <div style="text-align: center; margin-bottom: 1rem;">
+                     <div style="background-image: url('.jpg');background-size: cover;width:220px;height: 230px;border-radius: 50%; border: 4px solid #38bdf8;box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);transition: transform 1s ease-in-out;transform: rotateY(360deg);"> 👩‍💼</div>
+                    </div>
+                    <h3 style="text-align: center;">Mdme BESSAN Jeanne</h3>
+                    <p style="text-align: center; font-weight: 700; color: var(--deep-sky);">Responsable Financière</p>
+                    <p style="text-align: center; color: var(--light-text); font-size: 0.9rem;"> Etudiante en Hydrogéologie </p>
+                    <p style="margin-top: 1rem;"></p>
+                </div>
+                
+                <div class="card scroll-fade">
+                    <div style="text-align: center; margin-bottom: 1rem;">
+    <div style="background-image: url('2.jpg');background-size: cover;width:220px;height: 230px;border-radius: 50%; border: 4px solid #38bdf8;box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);transition: transform 1s ease-in-out;transform: rotateY(360deg);"> </div>
+                    </div>
+                  <div>  <h3 style="text-align: center;">Aurras Charnel KOUGBE ZOGAN </h3>
+                    <p style="text-align: center; font-weight: 700; color: var(--deep-sky);">Responsable Informatique et innovation</p>
+                   <p style="text-align: center; color: var(--light-text); font-size: 0.9rem;">Developpeur web & Coding en Python </p ><p style="text-align: center; color: var(--light-text); font-size: 0.9rem;">Etudiant en Hydrogéologie  </p>
+                   </div>
+                </div>
+                <div class="card scroll-fade">
+                    
+                         <div style="background-image: url('3.jpg');background-size: cover;width:220px;height: 230px;border-radius: 50%; border: 4px solid #38bdf8;box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);transition: transform 1s ease-in-out;transform: rotateY(360deg);"> </div>
+                    
+             <div style="text-align: center; margin-bottom: 1rem;">
+             
+                    <h3 style="text-align: center;">Camel SINZOGAN
+                    
+                    </h3>
+                    <p style="text-align: center; font-weight: 700; color: var(--deep-sky);">Responsable Technique & Opération</p>
+                    <p style="text-align: center; color: var(--light-text); font-size: 0.9rem;">Etudiant en Hydrogéologie</p>
+                </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 3rem;">
+                <button class="btn" onclick="navigateTo('contact')">Rejoindre l'Équipe</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- GALLERY PAGE -->
+    <div id="gallery-page" class="page">
+        <div class="project-header">
+            <div style="max-width: 1200px; margin: 0 auto;">
+                <a onclick="navigateTo('home')" class="back-btn">← Retour</a>
+                <h1>Galerie</h1>
+                <p style="font-size: 1.3rem; color: var(--light-text); margin-top: 1rem;">
+                    Découvrez nos projets et actions en images
+                </p>
+            </div>
+        </div>
+
+        <div class="project-content">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem;">
+                <div style="height: 300px; border-radius: 20px; background: linear-gradient(135deg, var(--sky-blue), var(--deep-sky)); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.3rem; font-weight: 600; cursor: pointer; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                    <span>📸 Mission Terrain - Prélèvement d'Eau</span>
+                </div>
+                <div style="height: 300px; border-radius: 20px; background: linear-gradient(135deg, var(--deep-sky), var(--sky-blue)); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.3rem; font-weight: 600; cursor: pointer; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                    <span>📸 Atelier Formation Étudiants </span>
+                </div>
+                <div style="height: 300px; border-radius: 20px; background: linear-gradient(135deg, var(--deep-sky), var(--sky-blue)); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.3rem; font-weight: 600; cursor: pointer; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                    <span>📸 Cartographie Hydrogéologique</span>
+                </div>
+                <div style="height: 300px; border-radius: 20px; background: linear-gradient(135deg, var(--sky-blue), var(--deep-sky)); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.3rem; font-weight: 600; cursor: pointer; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                    >
+                    <span>📸 Conférence Scientifique a L'INE 2025</span>
+                </div>
+                <div style="height: 300px; border-radius: 20px; background: linear-gradient(135deg, var(--sky-blue), var(--deep-sky)); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.3rem; font-weight: 600; cursor: pointer; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                    <span>📸 Sensibilisation Communautaire</span>
+                </div>
+                <div style="height: 300px; border-radius: 20px; background: linear-gradient(135deg, var(--deep-sky), var(--sky-blue)); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.3rem; font-weight: 600; cursor: pointer; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                    <span>📸 Équipe  en Action</span>
+                </div>
+               
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BLOG PAGE -->
+    <div id="blog-page" class="page">
+        <div class="project-header">
+            <div style="max-width: 1200px; margin: 0 auto;">
+                <a onclick="navigateTo('home')" class="back-btn">← Retour</a>
+                <h1>Blog & Actualités</h1>
+                <p style="font-size: 1.3rem; color: var(--light-text); margin-top: 1rem;">
+                    Suivez nos dernières publications et actualités
+                </p>
+            </div>
+        </div>
+
+        <div class="project-content">
+            <div class="cards">
+                <div class="card scroll-fade" onclick="navigateTo('blog-article1')">
+                    <div style="background: linear-gradient(135deg, var(--sky-blue), var(--deep-sky)); height: 200px; margin: -2.5rem -2.5rem 1.5rem -2.5rem; border-radius: 25px 25px 0 0; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">📰</div>
+                    <p style="font-size: 0.9rem; color: var(--light-text); margin-bottom: 0.5rem;">15 Janvier 2025</p>
+                    <h3>Les Défis de l'Hydrogéologie au 21ème Siècle</h3>
+                    <p>Analyse approfondie des principaux défis auxquels fait face l'hydrogéologie moderne, du changement climatique à la pollution des nappes.</p>
+                    <p style="margin-top: 1rem; color: var(--deep-sky); font-weight: 600;">Lire l'article →</p>
+                </div>
+                <div class="card scroll-fade" onclick="navigateTo('blog-article2')">
+                    <div style="background: linear-gradient(135deg, var(--deep-sky), var(--sky-blue)); height: 200px; margin: -2.5rem -2.5rem 1.5rem -2.5rem; border-radius: 25px 25px 0 0; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">🔬</div>
+                    <p style="font-size: 0.9rem; color: var(--light-text); margin-bottom: 0.5rem;">10 Janvier 2025</p>
+                    <h3>Techniques Modernes de Modélisation des Aquifères</h3>
+                    <p>Découvrez les dernières avancées en matière de modélisation numérique des nappes phréatiques et leur application pratique.</p>
+                    <p style="margin-top: 1rem; color: var(--deep-sky); font-weight: 600;">Lire l'article →</p>
+                </div>
+                <div class="card scroll-fade" onclick="navigateTo('blog-article3')">
+                    <div style="background: linear-gradient(135deg, var(--sky-blue), var(--deep-sky)); height: 200px; margin: -2.5rem -2.5rem 1.5rem -2.5rem; border-radius: 25px 25px 0 0; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">🌍</div>
+                    <p style="font-size: 0.9rem; color: var(--light-text); margin-bottom: 0.5rem;">5 Janvier 2025</p>
+                    <h3>Gestion Durable des Ressources en Eau</h3>
+                    <p>Comment les pratiques de gestion durable peuvent préserver nos ressources en eau souterraine pour les générations futures.</p>
+                    <p style="margin-top: 1rem; color: var(--deep-sky); font-weight: 600;">Lire l'article →</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BLOG ARTICLE 1 -->
+    <div id="blog-article1-page" class="page">
+        <div class="project-header">
+            <div style="max-width: 1200px; margin: 0 auto;">
+                <a onclick="navigateTo('blog')" class="back-btn">← Retour au blog</a>
+                <h1>Les Défis de l'Hydrogéologie au 21ème Siècle</h1>
+                <div class="project-meta">
+                    <span class="meta-item">📅 15 Janvier 2025</span>
+                    <span class="meta-item">✍️ Aurras KOUGBE ZOGAN</span>
+                    <span class="meta-item">⏱️ 8 min de lecture</span>
+                </div>
+            </div>
+        </div>
+        <div class="project-content">
+            <div class="project-image">📰 Défis Hydrogéologiques</div>
+            <h2>Introduction</h2>
+            <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 2rem;">
+                L'hydrogéologie moderne fait face à des défis sans précédent. Entre changement climatique, pollution anthropique et surexploitation des ressources, notre discipline doit s'adapter et innover pour garantir la disponibilité de l'eau souterraine.
+            </p>
+
+            <h2>1. Le Changement Climatique</h2>
+            <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 2rem;">
+                Les modifications des régimes de précipitations affectent directement la recharge des nappes phréatiques. Les épisodes de sécheresse prolongée réduisent l'infiltration, tandis que les événements pluvieux intenses peuvent compromettre la qualité de l'eau par ruissellement contaminé.
+            </p>
+
+            <h2>2. La Pollution des Nappes</h2>
+            <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 2rem;">
+                Les activités industrielles, agricoles et urbaines introduisent continuellement des contaminants dans les aquifères. Nitrates, pesticides, métaux lourds et micropolluants émergents menacent la qualité de nos ressources en eau souterraine.
+            </p>
+
+            <h2>3. La Surexploitation</h2>
+            <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 2rem;">
+                Dans de nombreuses régions, les prélèvements dépassent largement la capacité de recharge naturelle des nappes. Cette surexploitation entraîne un abaissement des niveaux piézométriques, compromettant la pérennité de la ressource.
+            </p>
+
+            <h2>Conclusion</h2>
+            <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 2rem;">
+                Face à ces défis, l'hydrogéologie doit se réinventer. Les jeunes hydrogéologues ont un rôle crucial à jouer dans le développement de solutions innovantes et durables. C'est notre mission au JFH-JPS.
+            </p>
+
+            <div style="text-align: center; margin-top: 3rem;">
+                <button class="btn" onclick="navigateTo('blog')">← Retour aux articles</button>
+                <button class="btn btn-outline" onclick="navigateTo('contact')" style="margin-left: 1rem;">Rejoignez-nous</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- BLOG ARTICLE 2 -->
+    <div id="blog-article2-page" class="page">
+        <div class="project-header">
+            <div style="max-width: 1200px; margin: 0 auto;">
+                <a onclick="navigateTo('blog')" class="back-btn">← Retour au blog</a>
+                <h1>Techniques Modernes de Modélisation des Aquifères</h1>
+                <div class="project-meta">
+                    <span class="meta-item">📅 10 Janvier 2025</span>
+                    <span class="meta-item">✍️ Amina El Ouardi</span>
+                    <span class="meta-item">⏱️ 10 min de lecture</span>
+                </div>
+            </div>
+        </div>
+        <div class="project-content">
+            <div class="project-image">🔬 Modélisation Numérique</div>
+            <h2>L'Évolution de la Modélisation</h2>
+            <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 2rem;">
+                La modélisation des aquifères a connu une révolution avec l'avènement des outils numériques puissants et des données géospatiales de haute résolution. Aujourd'hui, nous pouvons créer des représentations 3D détaillées des systèmes aquifères.
+            </p>
+
+            <h2>Logiciels et Outils</h2>
+            <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 2rem;">
+                Les logiciels comme MODFLOW, FEFLOW et GMS permettent de simuler l'écoulement des eaux souterraines avec une précision remarquable. L'intégration avec les SIG offre des possibilités d'analyse spatiale inédites.
+            </p>
+
+            <h2>Applications Pratiques</h2>
+            <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 2rem;">
+                Ces modèles servent à évaluer les ressources disponibles, prédire l'impact des prélèvements, simuler la propagation de contaminants et optimiser les stratégies de gestion. 
+            </p>
+        </div>
+    </div>
+
+    <!-- BLOG ARTICLE 3 -->
+    <div id="blog-article3-page" class="page">
+        <div class="project-header">
+            <div style="max-width: 1200px; margin: 0 auto;">
+                <a onclick="navigateTo('blog')" class="back-btn">← Retour au blog</a>
+                <h1>Gestion Durable des Ressources en Eau</h1>
+                <div class="project-meta">
+                    <span class="meta-item">📅 5 Janvier 2025</span>
+                    <span class="meta-item">✍️ Omar Benjelloun</span>
+                    <span class="meta-item">⏱️ 7 min de lecture</span>
+                </div>
+            </div>
+        </div>
+        <div class="project-content">
+            <div class="project-image">🌍 Gestion Durable</div>
+            <h2>Principes de Durabilité</h2>
+            <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 2rem;">
+                Une gestion durable de l'eau souterraine repose sur trois piliers : préservation quantitative, protection qualitative et équité sociale. Il s'agit de répondre aux besoins actuels sans compromettre ceux des générations futures.
+            </p>
+
+            <h2>Stratégies de Conservation</h2>
+            <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 2rem;">
+                La recharge artificielle, l'optimisation des prélèvements, la protection des zones de recharge et la valorisation des eaux usées traitées sont autant de stratégies qui contribuent à la durabilité de nos ressources.
+            </p>
+
+            <h2>Rôle de la Sensibilisation</h2>
+            <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 2rem;">
+                La réussite de toute stratégie de gestion durable passe par la sensibilisation et l'engagement des populations. C'est pourquoi au JFH-JPS, nous accordons une importance particulière aux actions de sensibilisation communautaire.
+            </p>
+        </div>
+    </div>
+
+    <!-- CONTACT PAGE -->
+    <div id="contact-page" class="page">
+        <div class="project-header">
+            <div style="max-width: 1200px; margin: 0 auto;">
+                <a onclick="navigateTo('home')" class="back-btn">← Retour</a>
+                <h1>Rejoignez l'Aventure JFH-JPS</h1>
+                <p style="font-size: 1.3rem; color: var(--light-text); margin-top: 1rem;">
+                    Ensemble, faisons de l'eau notre science et du savoir notre force
+                </p>
+            </div>
+        </div>
+
+        <div class="project-content">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                
+                    <p>Calavi, Bénin</p>
+                </div>
+                
+            </div>
+
+            <h2>Formulaire d'Inscription</h2>
+            <form onsubmit="handleSubmit(event)" id="contactForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="prenom">Prénom *</label>
+                        <input type="text" id="prenom" name="prenom" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nom">Nom *</label>
+                        <input type="text" id="nom" name="nom" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="telephone">Téléphone *</label>
+                        <input type="tel" id="telephone" name="telephone" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="formation">Formation/Spécialité *</label>
+                        <input type="text" id="formation" name="formation" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="niveau">Niveau d'études *</label>
+                        <select id="niveau" name="niveau" required>
+                            <option value="">Sélectionnez...</option>
+                            <option value="licence">Licence</option>
+                            <option value="master">Master</option>
+                            <option value="doctorat">Doctorat</option>
+                            <option value="ingenieur">Ingénieur</option>
+                            <option value="professionnel">Professionnel</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="interet">Domaine d'intérêt *</label>
+                    <select id="interet" name="interet" required>
+                        <option value="">Sélectionnez...</option>
+                        <option value="hydrogeo">Hydrogéologie</option>
+                        <option value="qualite">Qualité de l'eau</option>
+                        <option value="gis">SIG & Cartographie</option>
+                        <option value="modelisation">Modélisation</option>
+                        <option value="terrain">Projets terrain</option>
+                        <option value="formation">Formation & Sensibilisation</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="motivation">Pourquoi souhaitez-vous rejoindre JFH-JPS ? *</label>
+                    <textarea id="motivation" name="motivation" rows="5" required placeholder="Parlez-nous de vos motivations, vos compétences et comment vous souhaitez contribuer à notre mission..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="disponibilite">Disponibilité</label>
+                    <select id="disponibilite" name="disponibilite">
+                        <option value="">Sélectionnez...</option>
+                        <option value="temps-plein">Temps plein</option>
+                        <option value="temps-partiel">Temps partiel</option>
+                        <option value="weekend">Weekends uniquement</option>
+                        <option value="ponctuel">Ponctuel selon projets</option>
+                    </select>
+                </div>
+
+                <button type="submit">Envoyer ma Candidature</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>JFH-JPS</h3>
+                <p style="margin-bottom: 1rem;">Jeunes et Futurs Hydrogéologues - Jeunes Puits du Savoir</p>
+                <p style="font-style: italic; color: var(--sky-blue);">"L'eau notre science, le savoir notre force"</p>
+                <p style="margin-top: 1rem;">Association étudiante créée en 2025 à l'Institut National de l'Eau, dédiée à l'innovation en hydrogéologie et à la gestion durable des ressources en eau.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Navigation</h3>
+                <ul class="footer-links">
+                    <li><a onclick="navigateTo('home')">Accueil</a></li>
+                    <li><a onclick="navigateTo('about')">À Propos</a></li>
+                    <li><a onclick="navigateTo('projects')">Projets</a></li>
+                    <li><a onclick="navigateTo('team')">Équipe</a></li>
+                    <li><a onclick="navigateTo('gallery')">Galerie</a></li>
+                    <li><a onclick="navigateTo('blog')">Blog</a></li>
+                    <li><a onclick="navigateTo('contact')">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                
+                    <li>Calavi, Bénin</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025  - Tous droits réservés</p>
+            <p>| Conçu  pour Service Hydro Benin</p>
+        </div>
+    </footer>
+
+    <script>
+        // State Management
+        let currentPage = 'home';
+        let lastScrollTop = 0;
+
+        // Navigation function
+        function navigateTo(page) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(p => {
+                p.classList.remove('active');
+            });
+
+            // Show selected page
+            const targetPage = document.getElementById(page + '-page');
+            if (targetPage) {
+                targetPage.classList.add('active');
+                currentPage = page;
+                
+                // Update active nav link
+                document.querySelectorAll('nav a').forEach(a => {
+                    a.classList.remove('active');
+                });
+                
+                // Scroll to top smoothly
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                
+                // Trigger scroll animations
+                setTimeout(() => {
+                    observeElements();
+                }, 100);
+            }
+        }
+
+        // Toggle mobile menu
+        function toggleMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('active');
+        }
+
+        // Form submission
+        function handleSubmit(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(e.target);
+            const data = {};
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+
+            // Simulate form submission
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Envoi en cours...';
+            submitBtn.disabled = true;
+
+            setTimeout(() => {
+                alert('✅ Merci pour votre candidature !\n\nNous avons bien reçu votre demande d\'adhésion. Notre équipe examinera votre candidature et vous contactera très prochainement.\n\nBienvenue dans la communauté JFH-JPS !');
+                e.target.reset();
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+                navigateTo('home');
+            }, 1500);
+        }
+
+        // Scroll animations observer
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        function observeElements() {
+            document.querySelectorAll('.scroll-fade').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // Hide/show header on scroll
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const header = document.getElementById('header');
+            
+            if (scrollTop > lastScrollTop && scrollTop > 100) {
+                header.classList.add('hidden');
+            } else {
+                header.classList.remove('hidden');
+            }
+            
+            lastScrollTop = scrollTop;
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            const menu = document.getElementById('mobileMenu');
+            const btn = document.querySelector('.mobile-menu-btn');
+            
+            if (menu.classList.contains('active') && 
+                !menu.contains(e.target) && 
+                e.target !== btn) {
+                menu.classList.remove('active');
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            observeElements();
+            
+            // Prevent form submission on Enter in text inputs
+            document.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"]').forEach(input => {
+                input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                    }
+                });
+            });
+        });
+
+        // Security: Sanitize inputs
+        function sanitizeInput(input) {
+            const div = document.createElement('div');
+            div.textContent = input;
+            return div.innerHTML;
+        }
+
+        // Add input validation
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('contactForm');
+            if (form) {
+                form.addEventListener('submit', (e) => {
+                    const inputs = form.querySelectorAll('input, textarea');
+                    inputs.forEach(input => {
+                        input.value = sanitizeInput(input.value);
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
